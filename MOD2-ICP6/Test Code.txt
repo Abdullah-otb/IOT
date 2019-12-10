@@ -1,0 +1,73 @@
+ #include <Servo.h>
+
+// Used pins
+#define GRIPPER_SERVO 9
+#define UPPER_JOINT_SERVO 6
+#define LOWER_JOINT_SERVO 5
+#define BASE_ROTATOR_JOINT_SERVO 3
+
+// Gripper states
+#define GRIPPER_OPEN 0
+#define GRIPPER_CLOSED_SOFT 1
+#define GRIPPER_CLOSED_MEDIUM 2
+#define GRIPPER_CLOSED_HARD 3
+
+// Gripper configuration, specific to your robot
+#define GRIPPER_OPEN_ANGLE 150            // The angle of the servo in different positions
+#define GRIPPER_CLOSED_SOFT_ANGLE 75      // Closing with low force (less stressful on the servo)
+#define GRIPPER_CLOSED_MEDIUM_ANGLE 65    // Closing with medium force (slightly stressful on the servo)
+#define GRIPPER_CLOSED_HARD_ANGLE 0       // Closing with high force (quite stressful on the servo, it will also heat up)
+
+// Limits, specific to your robot
+#define SERVO_ANGLE_UPPER_LIMIT 170
+#define SERVO_ANGLE_LOWER_LIMIT 0
+#define SERVO_ANGLE_RESTING 90
+#define MIN_MOVEMENT_DELAY 2
+
+// Commands
+#define MOVE_GRIPPER 'G'
+#define MOVE_ARM 'A'
+
+Servo gripper, upperJoint, lowerJoint, baseRotator;
+
+unsigned int movementDelay = 5;
+
+int gripperState;
+int targetUpperJointAngle;
+int targetLowerJointAngle;
+int targetBaseRotatorAngle;
+
+float currentUpperJointAngle, currentLowerJointAngle, currentBaseRotatorAngle;
+float upperJointStep, lowerJointStep, baseRotatorStep;
+
+unsigned long lastStepTime = 0;
+
+void setup() {
+  Serial.begin(9600);
+
+  gripper.attach(GRIPPER_SERVO);
+  upperJoint.attach(UPPER_JOINT_SERVO);
+  lowerJoint.attach(LOWER_JOINT_SERVO);
+  baseRotator.attach(BASE_ROTATOR_JOINT_SERVO);
+
+}
+
+void loop(){
+  gripper.write(150);
+  delay(1000);
+  gripper.write(55);
+  delay(1000); 
+  upperJoint.write(120);
+  lowerJoint.write(120);
+  delay(1000);
+  upperJoint.write(50);
+  lowerJoint.write(50);
+  delay(1000);
+  baseRotator.write(150);
+  delay(1000);
+  baseRotator.write(50);
+  //lowerJoint.write();
+  //baseRotator.write();
+
+
+}
